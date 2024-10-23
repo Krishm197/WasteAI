@@ -91,8 +91,7 @@ class WasteVisionApp:
                 index=['Recyclable', 'Organic', 'Other']
             )
             fig = px.imshow(dummy_conf_matrix, 
-                           labels=dict(x="Predicted", y="Actual", color="Accuracy"),
-                           text=dummy_conf_matrix)
+                           labels=dict(x="Predicted", y="Actual", color="Accuracy"))
             st.plotly_chart(fig)
     
     def show_future_vision(self):
