@@ -169,11 +169,10 @@ class WasteVisionApp:
                          yaxis_title="Processing Capacity (normalized)")
         st.plotly_chart(fig)
     
-	def show_future_vision(self):
- 	   st.header("🚀 Future Vision")
-    
-  	  st.write("""
-   	 ### Extended Applications
+    def show_future_vision(self):
+        st.header("🚀 Future Vision")
+        st.write("""
+        ### Extended Applications
     	1. **Smart Cities Integration**
 			- Connected waste bins with fill-level monitoring
 			- Optimized collection routes
