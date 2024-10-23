@@ -11,7 +11,7 @@ import plotly.express as px
 import pandas as pd
 
 # Import our classifier
-from dual_waste_classifier import DualWasteClassifier
+from waste_classifier import DualWasteClassifier
 
 class WasteVisionApp:
     def __init__(self):
