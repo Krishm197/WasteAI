@@ -87,13 +87,13 @@ class WasteVisionApp:
             st.markdown("### Model Performance")
             dummy_conf_matrix = pd.DataFrame(
 				[[90, 5, 3, 1, 1, 0, 0, 0],
-            	 [4, 85, 8, 2, 1, 0, 0, 0],
-				 [3, 2, 92, 2, 1, 0, 0, 0],
-				 [1, 1, 1, 95, 2, 0, 0, 0],
+            	 [4, 85, 10, 2, 1, 0, 0, 0],
+				 [3, 2, 92, 2, 1, 1, 0, 0],
+				 [1, 1, 1, 95, 2, 5, 0, 0],
 				 [2, 1, 1, 2, 90, 4, 0, 0],
 				 [0, 0, 0, 0, 5, 95, 0, 0],
-				 [0, 0, 0, 0, 0, 0, 98, 2],
-				 [0, 0, 0, 0, 0, 0, 1, 99]],
+				 [0, 0, 0, 0, 0, 0, 98, 15],
+				 [0, 0, 0, 0, 0, 0, 10, 99]],
                 columns=['Recyclable', 'Organic', 'Paper', 'Electronic', 'Metal', 'Glass', 'Hazardous', 'Other'],
                 index=['Recyclable', 'Organic', 'Paper', 'Electronic', 'Metal', 'Glass', 'Hazardous', 'Other']
             )
@@ -128,7 +128,8 @@ class WasteVisionApp:
         st.plotly_chart(fig)
         st.header("🚀 Future Vision")
         st.write("""
-        ### Extended Applications
+        ### Extended Applications""")
+        st.write("""
     	1. **Smart Cities Integration**
 			- Connected waste bins with fill-level monitoring
 			- Optimized collection routes
