@@ -164,39 +164,53 @@ class WasteVisionApp:
                          yaxis_title="Processing Capacity (normalized)")
         st.plotly_chart(fig)
     
-    def show_future_vision(self):
-        st.header("🚀 Future Vision")
-        
-        st.write("""
-        ### Extended Applications
-        1. **Smart Cities Integration**
-            - Connected waste bins with fill-level monitoring
-            - Optimized collection routes
-            - Real-time waste analytics
-        
-        2. **Educational Impact**
-            - Interactive waste sorting games
-            - Public awareness campaigns
-            - School programs
-        
-        3. **Blockchain Integration**
-            - Waste tracking and verification
-            - Recycling rewards system
-            - Transparent supply chain
-        """)
-        
-        # Add a roadmap
-        st.subheader("Development Roadmap")
-        roadmap_data = pd.DataFrame({
-            'Phase': ['Current', '6 Months', '1 Year', '2 Years'],
-            'Technology': ['Basic Classification', 'Multi-stream Sorting', 
-                         'Advanced Robotics', 'Full Automation'],
-            'Completion': [100, 60, 30, 0]
-        })
-        
-        fig = px.timeline(roadmap_data, x_start=0, x_end='Completion', 
-                         y='Phase', color='Technology')
-        st.plotly_chart(fig)
+	def show_future_vision(self):
+ 	   st.header("🚀 Future Vision")
+    
+  	  st.write("""
+   	 ### Extended Applications
+    	1. **Smart Cities Integration**
+			- Connected waste bins with fill-level monitoring
+			- Optimized collection routes
+			- Real-time waste analytics
+    
+	    2. **Educational Impact**
+			- Interactive waste sorting games
+  	 		- Public awareness campaigns
+   		    - School programs
+    
+    	3. **Blockchain Integration**
+    		- Waste tracking and verification
+    		- Recycling rewards system
+    		- Transparent supply chain
+    	""")
+    
+    # Add a roadmap using a bar chart instead of timeline
+    	st.subheader("Development Roadmap")
+    	roadmap_data = pd.DataFrame({
+     	   'Phase': ['Current', '6 Months', '1 Year', '2 Years'],
+      	  'Progress': [100, 60, 30, 0]
+    	})
+    
+    	fig = px.bar(roadmap_data, 
+                 x='Phase', 
+                 y='Progress',
+                 title='Development Progress',
+                 labels={'Progress': 'Completion (%)', 'Phase': 'Timeline'},
+                 color='Progress',
+                 color_continuous_scale='Viridis')
+    
+    	fig.update_layout(showlegend=False,yaxis_range=[0, 100])
+	    st.plotly_chart(fig)
+
+    # Add additional milestone details
+ 	   st.write("""
+  		  ### Key Milestones
+    		- **Current**: Basic waste classification system
+    		- **6 Months**: Enhanced multi-stream sorting capabilities
+    		- **1 Year**: Integration of advanced robotics
+    		- **2 Years**: Full automation and smart city integration
+    	""")
 
 if __name__ == "__main__":
     app = WasteVisionApp()
