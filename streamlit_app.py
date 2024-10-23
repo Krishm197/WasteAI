@@ -52,28 +52,63 @@ class WasteVisionApp:
         st.header("🎯 Live Waste Classification Demo")
         
         col1, col2 = st.columns(2)
-        
-        with col1:
-            st.subheader("Upload Image or Use Camera")
-            source = st.radio("Select input source:", ["Upload Image", "Use Camera"])
+
+	with col1:
+    	st.subheader("Upload Image or Provide Image URL")
+    	source = st.radio("Select input source:", ["Upload Image", "Image URL"])
+    
+    	if source == "Upload Image":
+        	uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+        	if uploaded_file is not None:
+            	image = Image.open(uploaded_file)
+            	st.image(image, caption="Uploaded Image", use_column_width=True)
             
-            if source == "Upload Image":
-                uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-                if uploaded_file is not None:
-                    image = Image.open(uploaded_file)
-                    st.image(image, caption="Uploaded Image", use_column_width=True)
+            	if st.button("Classify Waste"):
+                	with st.spinner("Analyzing..."):
+                    # Simulate processing time for better UX
+                    	time.sleep(1)
+                    	result = self.classifier.classify_image(uploaded_file)
+                    	st.markdown(f"<div class='box'>{result}</div>", 
+                                 	unsafe_allow_html=True)
+
+	    elif source == "Image URL":
+	        image_url = st.text_input("Enter the image URL:")
+	        if image_url:
+	            try:
+	                response = requests.get(image_url)
+	                image = Image.open(BytesIO(response.content))
+	                st.image(image, caption="Image from URL", use_column_width=True)
+                
+	                if st.button("Classify Waste"):
+	                    with st.spinner("Analyzing..."):
+                        # Simulate processing time for better UX
+	                        time.sleep(1)
+	                        result = self.classifier.classify_image(image_url)
+	                        st.markdown(f"<div class='box'>{result}</div>", 
+	                                     unsafe_allow_html=True)
+            	except Exception as e:
+                	st.error("Error loading image from URL. Please check the URL.")
+        #with col1:
+            #st.subheader("Upload Image or Use Camera")
+            #source = st.radio("Select input source:", ["Upload Image", "Use Camera"])
+            
+            #if source == "Upload Image":
+             #   uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+              #  if uploaded_file is not None:
+               #     image = Image.open(uploaded_file)
+                #    st.image(image, caption="Uploaded Image", use_column_width=True)
                     
-                    if st.button("Classify Waste"):
-                        with st.spinner("Analyzing..."):
+                 #   if st.button("Classify Waste"):
+                  #      with st.spinner("Analyzing..."):
                             # Simulate processing time for better UX
-                            time.sleep(1)
-                            result = self.classifier.classify_image(uploaded_file)
-                            st.markdown(f"<div class='success-box'>{result}</div>", 
-                                      unsafe_allow_html=True)
+                   #         time.sleep(1)
+                    #        result = self.classifier.classify_image(uploaded_file)
+                     #       st.markdown(f"<div class='success-box'>{result}</div>", 
+                      #                unsafe_allow_html=True)
             
-            else:
-                st.warning("Note: Camera feed will be processed in real-time")
-                webrtc_streamer(key="waste_camera")
+            #else:
+             #   st.warning("Note: Camera feed will be processed in real-time")
+              #  webrtc_streamer(key="waste_camera")
         
         with col2:
             st.subheader("How it Works")
@@ -133,11 +168,13 @@ class WasteVisionApp:
     	1. **Smart Cities Integration**
 			- Connected waste bins with fill-level monitoring
 			- Optimized collection routes
-			- Real-time waste analytics
+			- Real-time waste analytics""")
+        st.write("""
         2. **Educational Impact**
 			- Interactive waste sorting games
   	 		- Public awareness campaigns
-   		    - School programs
+   		    - School programs""")
+        st.write("""
     	3. **Blockchain Integration**
     		- Waste tracking and verification
     		- Recycling rewards system
