@@ -113,9 +113,9 @@ class WasteVisionApp:
         with col2:
             st.subheader("How it Works")
             st.write("""
-            1. **Dual Model Approach**: Combines Microsoft's ResNet-50 and OpenAI's CLIP
-            2. **High Accuracy**: Leverages the strengths of both models
-            3. **Real-time Processing**: Suitable for industrial applications
+            1. **Multi Model Approach**: Combines Microsoft's ResNet-50, OpenAI's CLIP and a fine tuned Waste CNN model
+            2. **High Accuracy**: Leverages the strengths of all models
+            3. **Real-time Processing**: Suitable for industrial applications and creating an environmental impact
             """)
             
             # Add a sample confusion matrix or accuracy metrics
