@@ -1,8 +1,9 @@
 streamlit
 Pillow
-cv2
-pandas
-numpy
 torch
-time
+opencv-python
+numpy
+plotly
+pandas
+streamlit-webrtc
 pathlib
