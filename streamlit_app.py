@@ -112,11 +112,11 @@ class WasteVisionApp:
                 #<p>The advanced system combines computer vision with robotic automation to achieve efficient and accurate waste sorting. </p>
             #</div>
             #""", unsafe_allow_html=True)
-            st.write("""
-            1. **Dual Model Approach**: Combines Microsoft's ResNet-50 and OpenAI's CLIP
-            2. **High Accuracy**: Leverages the strengths of both models
-            3. **Real-time Processing**: Suitable for industrial applications
-            """)
+            	st.write("""
+            	1. **Dual Model Approach**: Combines Microsoft's ResNet-50 and OpenAI's CLIP
+            	2. **High Accuracy**: Leverages the strengths of both models
+            	3. **Real-time Processing**: Suitable for industrial applications
+            	""")
             #st.write(""" 
             	### Key Components:
             		#1. **Vision System**: Our AI classifier
