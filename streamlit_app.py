@@ -89,11 +89,11 @@ class WasteVisionApp:
 				[[90, 5, 3, 1, 1, 0, 0, 0],
             	 [4, 85, 10, 2, 1, 0, 0, 0],
 				 [3, 2, 92, 2, 1, 1, 0, 0],
-				 [1, 1, 1, 95, 2, 5, 0, 0],
-				 [2, 1, 1, 2, 90, 4, 0, 0],
+				 [1, 1, 1, 95, 15, 5, 0, 0],
+				 [2, 1, 17, 90, 4, 0, 0],
 				 [0, 0, 0, 0, 5, 95, 0, 0],
 				 [0, 0, 0, 0, 0, 0, 98, 15],
-				 [0, 0, 0, 0, 0, 0, 10, 99]],
+				 [0, 0, 0, 0, 0, 0, 8, 99]],
                 columns=['Recyclable', 'Organic', 'Paper', 'Electronic', 'Metal', 'Glass', 'Hazardous', 'Other'],
                 index=['Recyclable', 'Organic', 'Paper', 'Electronic', 'Metal', 'Glass', 'Hazardous', 'Other']
             )
@@ -134,12 +134,10 @@ class WasteVisionApp:
 			- Connected waste bins with fill-level monitoring
 			- Optimized collection routes
 			- Real-time waste analytics
-    
-	    2. **Educational Impact**
+        2. **Educational Impact**
 			- Interactive waste sorting games
   	 		- Public awareness campaigns
    		    - School programs
-    
     	3. **Blockchain Integration**
     		- Waste tracking and verification
     		- Recycling rewards system
