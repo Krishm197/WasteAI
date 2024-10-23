@@ -64,7 +64,7 @@ class WasteVisionApp:
                         # Simulate processing time for better UX
                         time.sleep(1)
                         result = self.classifier.classify_image(uploaded_file)
-                        st.markdown(f"<div class='success-box'>{result}</div>", 
+                        st.markdown(f"<div class='box'>{result}</div>", 
                             unsafe_allow_html=True)
         
         with col2:
@@ -94,6 +94,25 @@ class WasteVisionApp:
             st.plotly_chart(fig)
     
     def show_future_vision(self):
+        st.header("🚀 Future Vision")
+        st.write("""
+        ### Extended Applications""")
+        st.write("""
+    	1. **Smart Cities Integration**
+			- Connected waste bins with fill-level monitoring
+			- Optimized collection routes
+			- Real-time waste analytics""")
+        st.write("""
+        2. **Educational Impact**
+			- Interactive waste sorting games
+  	 		- Public awareness campaigns
+   		    - School programs""")
+        st.write("""
+    	3. **Blockchain Integration**
+    		- Waste tracking and verification
+    		- Recycling rewards system
+    		- Transparent supply chain
+    	""")
         st.header("📊 Environmental Impact")
         
         # Create metrics
@@ -118,25 +137,10 @@ class WasteVisionApp:
                          xaxis_title="Year",
                          yaxis_title="Processing Capacity (normalized)")
         st.plotly_chart(fig)
-        st.header("🚀 Future Vision")
-        st.write("""
-        ### Extended Applications""")
-        st.write("""
-    	1. **Smart Cities Integration**
-			- Connected waste bins with fill-level monitoring
-			- Optimized collection routes
-			- Real-time waste analytics""")
-        st.write("""
-        2. **Educational Impact**
-			- Interactive waste sorting games
-  	 		- Public awareness campaigns
-   		    - School programs""")
-        st.write("""
-    	3. **Blockchain Integration**
-    		- Waste tracking and verification
-    		- Recycling rewards system
-    		- Transparent supply chain
-    	""")
+        st.header("📮 Contact")
+        st.write("I'm always open to finding applications of tech in traditional industries and love to collaborate on new projects. Feel free to contact me for any suggestions or just to connect!")
+        st.write("📧 krish.ubc.j@gmail.com")
+        st.markdown("[LinkedIn](https://www.linkedin.com/in/krish-mehta-172559202/)")
 
 if __name__ == "__main__":
     app = WasteVisionApp()
