@@ -41,14 +41,10 @@ class WasteVisionApp:
         
         # Navigation
         section = st.sidebar.radio("Navigate", 
-            ["Live Demo", "Industrial Applications", "Impact Visualization", "Future Vision"])
+            ["Live Demo", "Impact and Vision"])
         
         if section == "Live Demo":
             self.show_live_demo()
-        elif section == "Industrial Applications":
-            self.show_industrial_applications()
-        elif section == "Impact Visualization":
-            self.show_impact_visualization()
         else:
             self.show_future_vision()
     
@@ -99,51 +95,7 @@ class WasteVisionApp:
                            text=dummy_conf_matrix)
             st.plotly_chart(fig)
     
-    def show_industrial_applications(self):
-        st.header("🏭 Industrial Applications")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-        	st.subheader("Automated Sorting System")
-            #st.markdown("""
-            #<div style='background-color: #f0f2f6; padding: 20px; border-radius:10px;'>
-            	#<h4>Robotic Sorting System</h4>
-                #<p>The advanced system combines computer vision with robotic automation to achieve efficient and accurate waste sorting. </p>
-            #</div>
-            #""", unsafe_allow_html=True)
-            #st.write(""" 
-            	### Key Components:
-            		#1. **Vision System**: Our AI classifier
-            		#2. **Robotic Arms**: Precise picking and sorting
-            		#3. **Conveyor System**: Continuous waste flow
-            		#4. **Control System**: Real-time coordination
-            #""")
-        
-        with col2:
-            st.subheader("Integration Points")
-            
-            # Interactive system diagram
-            fig = go.Figure()
-            fig.add_trace(go.Sankey(
-                node=dict(
-                    pad=15,
-                    thickness=20,
-                    line=dict(color="black", width=0.5),
-                    label=["Mixed Waste", "Vision System", "Robotics", "Sorted Plastic", 
-                           "Sorted Paper", "Sorted Glass"],
-                    color=["gray", "blue", "green", "red", "orange", "purple"]
-                ),
-                link=dict(
-                    source=[0, 0, 0, 1, 1, 1],
-                    target=[1, 1, 1, 3, 4, 5],
-                    value=[1, 1, 1, 1, 1, 1]
-                )
-            ))
-            fig.update_layout(title_text="System Integration Flow", font_size=10)
-            st.plotly_chart(fig)
-    
-    def show_impact_visualization(self):
+    def show_future_vision(self):
         st.header("📊 Environmental Impact")
         
         # Create metrics
@@ -168,8 +120,6 @@ class WasteVisionApp:
                          xaxis_title="Year",
                          yaxis_title="Processing Capacity (normalized)")
         st.plotly_chart(fig)
-    
-    def show_future_vision(self):
         st.header("🚀 Future Vision")
         st.write("""
         ### Extended Applications
