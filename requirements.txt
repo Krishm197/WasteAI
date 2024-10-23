@@ -1,1 +1,10 @@
 streamlit
+Pillow
+cv2
+pandas
+numpy
+torch
+time
+pathlib
+plotly.graph_objects
+plotly.express
