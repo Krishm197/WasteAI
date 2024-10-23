@@ -52,42 +52,40 @@ class WasteVisionApp:
         st.header("🎯 Live Waste Classification Demo")
         
         col1, col2 = st.columns(2)
-
-	with col1:
-    	st.subheader("Upload Image or Provide Image URL")
-    	source = st.radio("Select input source:", ["Upload Image", "Image URL"])
-    
-    	if source == "Upload Image":
-        	uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-        	if uploaded_file is not None:
-            	image = Image.open(uploaded_file)
-            	st.image(image, caption="Uploaded Image", use_column_width=True)
-            
-            	if st.button("Classify Waste"):
-                	with st.spinner("Analyzing..."):
-                    # Simulate processing time for better UX
+        
+        with col1:
+        st.subheader("Upload Image or Provide Image URL")
+        source = st.radio("Select input source:", ["Upload Image", "Image URL"])
+        if source == "Upload Image":
+            uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+            if uploaded_file is not None:
+                image = Image.open(uploaded_file)
+                st.image(image, caption="Uploaded Image", use_column_width=True)
+                if st.button("Classify Waste"):
+                    with st.spinner("Analyzing..."):
+                    	# Simulate processing time for better UX
                     	time.sleep(1)
                     	result = self.classifier.classify_image(uploaded_file)
                     	st.markdown(f"<div class='box'>{result}</div>", 
                                  	unsafe_allow_html=True)
 
 	    elif source == "Image URL":
-	        image_url = st.text_input("Enter the image URL:")
-	        if image_url:
-	            try:
-	                response = requests.get(image_url)
+            image_url = st.text_input("Enter the image URL:")
+            if image_url:
+                try:
+                    response = requests.get(image_url)
 	                image = Image.open(BytesIO(response.content))
 	                st.image(image, caption="Image from URL", use_column_width=True)
                 
 	                if st.button("Classify Waste"):
-	                    with st.spinner("Analyzing..."):
+                        with st.spinner("Analyzing..."):
                         # Simulate processing time for better UX
-	                        time.sleep(1)
+                        	time.sleep(1)
 	                        result = self.classifier.classify_image(image_url)
 	                        st.markdown(f"<div class='box'>{result}</div>", 
-	                                     unsafe_allow_html=True)
-            	except Exception as e:
-                	st.error("Error loading image from URL. Please check the URL.")
+                            unsafe_allow_html=True)
+                except Exception as e:
+                    st.error("Error loading image from URL. Please check the URL.")
         #with col1:
             #st.subheader("Upload Image or Use Camera")
             #source = st.radio("Select input source:", ["Upload Image", "Use Camera"])
