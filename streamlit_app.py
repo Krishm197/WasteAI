@@ -112,11 +112,12 @@ class WasteVisionApp:
                 #<p>The advanced system combines computer vision with robotic automation to achieve efficient and accurate waste sorting. </p>
             #</div>
             #""", unsafe_allow_html=True)
-            st.write(""" ### Key Components:
-            	1. **Vision System**: Our AI classifier
-            	2. **Robotic Arms**: Precise picking and sorting
-            	3. **Conveyor System**: Continuous waste flow
-            	4. **Control System**: Real-time coordination
+            st.write(""" 
+            	### Key Components:
+            		1. **Vision System**: Our AI classifier
+            		2. **Robotic Arms**: Precise picking and sorting
+            		3. **Conveyor System**: Continuous waste flow
+            		4. **Control System**: Real-time coordination
             """)
         
         with col2:
