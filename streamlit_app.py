@@ -106,12 +106,12 @@ class WasteVisionApp:
         
         with col1:
         	st.subheader("Automated Sorting System")
-            st.markdown("""
-            <div style='background-color: #f0f2f6; padding: 20px; border-radius:10px;'>
-            	<h4>Robotic Sorting System</h4>
-                <p>The advanced system combines computer vision with robotic automation to achieve efficient and accurate waste sorting. </p>
-            </div>
-            """, unsafe_allow_html=True)
+            #st.markdown("""
+            #<div style='background-color: #f0f2f6; padding: 20px; border-radius:10px;'>
+            	#<h4>Robotic Sorting System</h4>
+                #<p>The advanced system combines computer vision with robotic automation to achieve efficient and accurate waste sorting. </p>
+            #</div>
+            #""", unsafe_allow_html=True)
             st.write("""
             ### Key Components:
             1. **Vision System**: Our AI classifier
