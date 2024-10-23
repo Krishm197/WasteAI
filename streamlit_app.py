@@ -86,9 +86,16 @@ class WasteVisionApp:
             # Add a sample confusion matrix or accuracy metrics
             st.markdown("### Model Performance")
             dummy_conf_matrix = pd.DataFrame(
-                [[95, 2, 3], [4, 92, 4], [3, 2, 95]],
-                columns=['Recyclable', 'Organic', 'Other'],
-                index=['Recyclable', 'Organic', 'Other']
+				[[90, 5, 3, 1, 1, 0, 0, 0],
+            	 [4, 85, 8, 2, 1, 0, 0, 0],
+				 [3, 2, 92, 2, 1, 0, 0, 0],
+				 [1, 1, 1, 95, 2, 0, 0, 0],
+				 [2, 1, 1, 2, 90, 4, 0, 0],
+				 [0, 0, 0, 0, 5, 95, 0, 0],
+				 [0, 0, 0, 0, 0, 0, 98, 2],
+				 [0, 0, 0, 0, 0, 0, 1, 99]],
+                columns=['Recyclable', 'Organic', 'Paper', 'Electronic', 'Metal', 'Glass', 'Hazardous', 'Other'],
+                index=['Recyclable', 'Organic', 'Paper', 'Electronic', 'Metal', 'Glass', 'Hazardous', 'Other']
             )
             fig = px.imshow(dummy_conf_matrix, 
                            labels=dict(x="Predicted", y="Actual", color="Accuracy"))
