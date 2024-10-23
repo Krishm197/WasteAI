@@ -105,8 +105,13 @@ class WasteVisionApp:
         col1, col2 = st.columns(2)
         
         with col1:
-            st.subheader("Automated Sorting System")
-            st.image("/api/placeholder/600/400", caption="Robotic Sorting System Concept")
+        	st.subheader("Automated Sorting System")
+			st.markdown("""
+            <div style='background-color: #f0f2f6; padding: 20px; border-radius:10px;'>
+            	<h4>Robotic Sorting System</h4>
+                <p>The advanced system combines computer vision with robotic automation to achieve efficient and accurate waste sorting. </p>
+            </div>
+            """, unsafe_allow_html=True)
             st.write("""
             ### Key Components:
             1. **Vision System**: Our AI classifier
@@ -185,32 +190,5 @@ class WasteVisionApp:
     		- Transparent supply chain
     	""")
     
-    # Add a roadmap using a bar chart instead of timeline
-    	st.subheader("Development Roadmap")
-    	roadmap_data = pd.DataFrame({
-     	   'Phase': ['Current', '6 Months', '1 Year', '2 Years'],
-      	  'Progress': [100, 60, 30, 0]
-    	})
-    
-    	fig = px.bar(roadmap_data, 
-                 x='Phase', 
-                 y='Progress',
-                 title='Development Progress',
-                 labels={'Progress': 'Completion (%)', 'Phase': 'Timeline'},
-                 color='Progress',
-                 color_continuous_scale='Viridis')
-    
-    	fig.update_layout(showlegend=False,yaxis_range=[0, 100])
-	    st.plotly_chart(fig)
-
-    # Add additional milestone details
- 	   st.write("""
-  		  ### Key Milestones
-    		- **Current**: Basic waste classification system
-    		- **6 Months**: Enhanced multi-stream sorting capabilities
-    		- **1 Year**: Integration of advanced robotics
-    		- **2 Years**: Full automation and smart city integration
-    	""")
-
 if __name__ == "__main__":
     app = WasteVisionApp()
