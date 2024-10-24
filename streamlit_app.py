@@ -8,6 +8,7 @@ import numpy as np
 from pathlib import Path
 import plotly.graph_objects as go
 import pandas as pd
+import traceback  # To capture detailed error info
 
 # Import our classifier
 from waste_classifier import DualWasteClassifier
@@ -66,17 +67,24 @@ class WasteVisionApp:
         return self.classifier.classify_image(image_path)
 
     def classify_image_safely(self, image_path):
-        """Handle image classification with error catching."""
+        """Handle image classification with error catching and detailed logging."""
         try:
             # Log the image path to make sure it's being passed correctly
-            st.write(f"Classifying image: {image_path}")
+            st.write(f"Classifying image from path: {image_path}")
             
             # Perform classification with the image path
             result = self.classify_image(image_path)
+            
+            # Check if result is None (if classifier returns None on failure)
+            if result is None:
+                st.error("Classifier returned no result. Please check the input.")
+                return None
+            
             return result
         except Exception as e:
-            # Log the error for debugging purposes
-            st.error(f"Error during classification: {e}")
+            # Log the full traceback to help with debugging
+            st.error(f"Error during classification: {str(e)}")
+            st.error(traceback.format_exc())  # Print full error details for debugging
             return None
     
     def show_live_demo(self):
@@ -91,19 +99,25 @@ class WasteVisionApp:
             if uploaded_file and st.button("Classify Waste"):
                 with st.spinner("Analyzing..."):
                     # Save the uploaded image to a temporary file
-                    with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as temp_file:
-                        # Ensure the image is saved in the correct format
-                        image = Image.open(uploaded_file)
-                        image.save(temp_file.name)
-                        temp_file_path = temp_file.name
-
-                    # Pass the temporary file path to the classifier
-                    result = self.classify_image_safely(temp_file_path)
+                    try:
+                        with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as temp_file:
+                            # Ensure the image is saved in the correct format
+                            image = Image.open(uploaded_file)
+                            image.save(temp_file.name)
+                            temp_file_path = temp_file.name
+                        
+                        # Pass the temporary file path to the classifier
+                        result = self.classify_image_safely(temp_file_path)
+                        
+                        if result:
+                            st.markdown(f"<div class='success-box'>{result}</div>", unsafe_allow_html=True)
+                        else:
+                            st.error("Classification failed. Please try again.")
                     
-                    if result:
-                        st.markdown(f"<div class='success-box'>{result}</div>", unsafe_allow_html=True)
-                    else:
-                        st.error("Classification failed. Please try again.")
+                    except Exception as e:
+                        # Log any issues with saving or processing the image
+                        st.error(f"Error processing the image: {str(e)}")
+                        st.error(traceback.format_exc())
 
         with col2:
             st.subheader("How it Works")
