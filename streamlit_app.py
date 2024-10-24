@@ -2,16 +2,30 @@ import streamlit as st
 from PIL import Image
 import torch
 import time
-from streamlit_webrtc import webrtc_streamer
 import cv2
 import numpy as np
 from pathlib import Path
 import plotly.graph_objects as go
-import plotly.express as px
 import pandas as pd
 
 # Import our classifier
 from waste_classifier import DualWasteClassifier
+
+# Static content moved to separate functions
+def load_custom_css():
+    """Load custom CSS for the app."""
+    st.markdown("""
+    <style>
+    .main {background-color: #f5f5f5}
+    .stButton>button {background-color: #4CAF50; color: white;}
+    .success-box {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background-color: #e8f5e9;
+        border: 2px solid #4CAF50;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 class WasteVisionApp:
     def __init__(self):
@@ -20,125 +34,120 @@ class WasteVisionApp:
         self.main()
     
     def setup_page(self):
+        """Initial page configuration."""
         st.set_page_config(page_title="Waste Vision", layout="wide")
-        
-        # Custom CSS
-        st.markdown("""
-        <style>
-        .main {background-color: #f5f5f5}
-        .stButton>button {background-color: #4CAF50; color: white;}
-        .success-box {
-            padding: 1rem;
-            border-radius: 0.5rem;
-            background-color: #e8f5e9;
-            border: 2px solid #4CAF50;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+        load_custom_css()
     
     def main(self):
+        """Main function to handle app logic and navigation."""
         st.title("🌍 Waste Vision: Revolutionizing Waste Management")
         
-        # Navigation
-        section = st.sidebar.radio("Navigate", 
-            ["Live Demo", "Impact and Vision"])
+        # Use tabs instead of sidebar for navigation
+        tab1, tab2 = st.tabs(["Live Demo", "Impact and Vision"])
         
-        if section == "Live Demo":
+        with tab1:
             self.show_live_demo()
-        else:
+        with tab2:
             self.show_future_vision()
+
+    def upload_and_display_image(self):
+        """Function to handle image uploading and displaying."""
+        uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+        if uploaded_file:
+            image = Image.open(uploaded_file)
+            st.image(image, caption="Uploaded Image", use_column_width=True)
+            return uploaded_file
+        return None
+
+    @st.cache_resource
+    def classify_image(self, image):
+        """Cache the classification process for efficiency."""
+        return self.classifier.classify_image(image)
+
+    def classify_image_safely(self, image):
+        """Handle image classification with error catching."""
+        try:
+            result = self.classify_image(image)
+            return result
+        except Exception as e:
+            st.error("Classification failed. Please try again.")
+            return None
     
     def show_live_demo(self):
+        """Display the live demo section."""
         st.header("🎯 Live Waste Classification Demo")
-        
         col1, col2 = st.columns(2)
         
         with col1:
             st.subheader("Upload Image")
-            uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-            if uploaded_file is not None:
-                image = Image.open(uploaded_file)
-                st.image(image, caption="Uploaded Image", use_column_width=True)
-                if st.button("Classify Waste"):
-                    with st.spinner("Analyzing..."):
-                        # Simulate processing time for better UX
-                        time.sleep(1)
-                        result = self.classifier.classify_image(uploaded_file)
-                        st.markdown(f"<div class='box'>{result}</div>", 
-                            unsafe_allow_html=True)
+            uploaded_file = self.upload_and_display_image()
+            if uploaded_file and st.button("Classify Waste"):
+                with st.spinner("Analyzing..."):
+                    # Simulate processing time for better UX
+                    time.sleep(1)
+                    result = self.classify_image_safely(uploaded_file)
+                    if result:
+                        st.markdown(f"<div class='success-box'>{result}</div>", unsafe_allow_html=True)
         
         with col2:
             st.subheader("How it Works")
             st.write("""
-            1. **Multi Model Approach**: Combines Microsoft's ResNet-50, OpenAI's CLIP and a fine tuned Waste CNN model
+            1. **Multi-Model Approach**: Combines Microsoft's ResNet-50, OpenAI's CLIP and a fine-tuned Waste CNN model
             2. **High Accuracy**: Leverages the strengths of all models
             3. **Real-time Processing**: Suitable for industrial applications and creating an environmental impact
             """)
-            
-            # Add a sample confusion matrix or accuracy metrics
-            st.markdown("### Model Performance")
-            dummy_conf_matrix = pd.DataFrame(
-                [[90, 5, 3, 1, 1, 0, 0, 0],
-                 [4, 85, 10, 2, 1, 0, 0, 0],
-                 [3, 2, 92, 2, 1, 1, 0, 0],
-                 [1, 1, 1, 95, 15, 5, 0, 0],
-                 [2, 1, 4, 17, 90, 4, 0, 0],
-                 [0, 0, 0, 0, 5, 95, 0, 0],
-                 [0, 0, 0, 0, 0, 0, 98, 15],
-                 [0, 0, 0, 0, 0, 0, 8, 99]],
-                columns=['Recyclable', 'Organic', 'Paper', 'Electronic', 'Metal', 'Glass', 'Hazardous', 'Other'],
-                index=['Recyclable', 'Organic', 'Paper', 'Electronic', 'Metal', 'Glass', 'Hazardous', 'Other']
-            )
-            fig = px.imshow(dummy_conf_matrix, 
-                           labels=dict(x="Predicted", y="Actual", color="Accuracy"))
-            st.plotly_chart(fig)
-    
+
+    def display_metrics(self, metrics_dict):
+        """Display metrics in columns for a clean layout."""
+        cols = st.columns(len(metrics_dict))
+        for i, (label, value) in enumerate(metrics_dict.items()):
+            cols[i].metric(label, value)
+
     def show_future_vision(self):
+        """Display the future vision section."""
         st.header("🚀 Future Vision")
         st.write("""
-        ### Extended Applications""")
-        st.write("""
-    	1. **Smart Cities Integration**
-			- Connected waste bins with fill-level monitoring
-			- Optimized collection routes
-			- Real-time waste analytics""")
-        st.write("""
+        ### Extended Applications
+        1. **Smart Cities Integration**
+            - Connected waste bins with fill-level monitoring
+            - Optimized collection routes
+            - Real-time waste analytics
+
         2. **Educational Impact**
-			- Interactive waste sorting games
-  	 		- Public awareness campaigns
-   		    - School programs""")
-        st.write("""
-    	3. **Blockchain Integration**
-    		- Waste tracking and verification
-    		- Recycling rewards system
-    		- Transparent supply chain
-    	""")
+            - Interactive waste sorting games
+            - Public awareness campaigns
+            - School programs
+
+        3. **Blockchain Integration**
+            - Waste tracking and verification
+            - Recycling rewards system
+            - Transparent supply chain
+        """)
+
         st.header("📊 Environmental Impact")
-        
         # Create metrics
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.metric("Sorting Accuracy", "94%", "+2.5%")
-        with col2:
-            st.metric("Processing Speed", "1.2 tons/hour", "+0.3 tons")
-        with col3:
-            st.metric("CO2 Reduction", "500kg/day", "+50kg")
-        
-        # Add projection graph
+        self.display_metrics({
+            "Sorting Accuracy": "94%",
+            "Processing Speed": "1.2 tons/hour",
+            "CO2 Reduction": "500kg/day"
+        })
+
+        # Projected impact over time graph
         st.subheader("Projected Impact Over Time")
         years = list(range(2024, 2031))
         manual_sorting = [100, 105, 110, 115, 120, 125, 130]
         ai_sorting = [100, 130, 170, 220, 280, 350, 430]
-        
+
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=years, y=manual_sorting, name="Manual Sorting"))
         fig.add_trace(go.Scatter(x=years, y=ai_sorting, name="AI-Powered Sorting"))
         fig.update_layout(title="Waste Processing Efficiency", 
-                         xaxis_title="Year",
-                         yaxis_title="Processing Capacity (normalized)")
+                          xaxis_title="Year",
+                          yaxis_title="Processing Capacity (normalized)")
         st.plotly_chart(fig)
+
         st.header("📮 Contact")
-        st.write("I'm always open to finding applications of tech in traditional industries and love to collaborate on new projects. Feel free to contact me for any suggestions or just to connect!")
+        st.write("Feel free to contact me for any suggestions or just to connect!")
         st.write("📧 krish.ubc.j@gmail.com")
         st.markdown("[LinkedIn](https://www.linkedin.com/in/krish-mehta-172559202/)")
 
