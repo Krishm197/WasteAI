@@ -1,19 +1,6 @@
-# 🎈 Blank app template
+Improper recycling and the unchecked overflow of landfills pose one of the gravest threats to environmental sustainability today. To tackle this pressing issue, the AI Waste Classification System is an advanced application designed to revolutionize how we sort and manage waste. By leveraging state-of-the-art AI models like ResNet and CLIP, this app empowers smarter, more efficient waste categorization—enabling better recycling and reduced landfill contributions.
 
-A simple Streamlit app template for you to modify!
+This app envisions a future where AI and robotics work in harmony to streamline waste management systems worldwide, paving the way for cleaner cities, reduced pollution, and more sustainable practices. Whether in industrial facilities or community recycling hubs, this technology can play a vital role in reshaping waste management infrastructure.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
-
-### How to run it on your own machine
-
-1. Install the requirements
-
-   ```
-   $ pip install -r requirements.txt
-   ```
-
-2. Run the app
-
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+Collaboration Opportunity:
+As a passionate advocate for using AI and technology to address global challenges, I am open to partnerships and innovative ideas. Let’s collaborate to design cutting-edge solutions that make a tangible impact on our planet!
